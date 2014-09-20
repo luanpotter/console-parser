@@ -1,4 +1,4 @@
-package br.com.dextra.pma.parser;
+package xya.luan.console.parser;
 
 public interface Keyword {
 

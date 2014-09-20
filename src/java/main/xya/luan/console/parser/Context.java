@@ -1,4 +1,4 @@
-package br.com.dextra.pma.parser;
+package xya.luan.console.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;

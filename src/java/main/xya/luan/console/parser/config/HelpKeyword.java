@@ -1,6 +1,6 @@
-package br.com.dextra.pma.parser.config;
+package xya.luan.console.parser.config;
 
-import br.com.dextra.pma.parser.Keyword;
+import xya.luan.console.parser.Keyword;
 
 public enum HelpKeyword implements Keyword {
     LIST("help:list"), SHOW("help:show");

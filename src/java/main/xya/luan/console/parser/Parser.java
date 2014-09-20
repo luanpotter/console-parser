@@ -1,4 +1,4 @@
-package br.com.dextra.pma.parser;
+package xya.luan.console.parser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.dextra.pma.parser.config.ConfigKeyword;
-import br.com.dextra.pma.parser.config.HelpKeyword;
+import xya.luan.console.parser.config.ConfigKeyword;
+import xya.luan.console.parser.config.HelpKeyword;
 
 public class Parser implements Serializable {
 

@@ -1,17 +1,17 @@
-package br.com.dextra.pma.parser.config;
+package xya.luan.console.parser.config;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import br.com.dextra.pma.parser.Action;
-import br.com.dextra.pma.parser.Callable;
-import br.com.dextra.pma.parser.Context;
-import br.com.dextra.pma.parser.Controller;
-import br.com.dextra.pma.parser.Keyword;
-import br.com.dextra.pma.parser.Output;
-import br.com.dextra.pma.parser.Parser;
-import br.com.dextra.pma.parser.Pattern;
+import xya.luan.console.parser.Action;
+import xya.luan.console.parser.Callable;
+import xya.luan.console.parser.Context;
+import xya.luan.console.parser.Controller;
+import xya.luan.console.parser.Keyword;
+import xya.luan.console.parser.Output;
+import xya.luan.console.parser.Parser;
+import xya.luan.console.parser.Pattern;
 
 public class ConfigController extends Controller<Context> {
 
