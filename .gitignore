@@ -1,0 +1,5 @@
+**/*.dat
+target/
+.project
+.classpath
+.settings/
