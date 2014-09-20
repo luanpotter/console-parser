@@ -1,6 +1,6 @@
-package xya.luan.console.parser.config;
+package xyz.luan.console.parser.config;
 
-import xya.luan.console.parser.Keyword;
+import xyz.luan.console.parser.Keyword;
 
 public enum ConfigKeyword implements Keyword {
     LIST_KEYWORDS("config:listKeywords"),

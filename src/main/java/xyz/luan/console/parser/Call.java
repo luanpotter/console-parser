@@ -1,14 +1,13 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Call implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = -1477714211952802085L;
+
     private Keyword keyword;
     private Map<String, String> args;
 

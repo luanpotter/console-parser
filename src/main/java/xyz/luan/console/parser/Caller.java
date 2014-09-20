@@ -1,4 +1,4 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

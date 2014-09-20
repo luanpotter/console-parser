@@ -1,4 +1,4 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 public interface Keyword {
 

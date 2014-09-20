@@ -1,4 +1,4 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.util.HashMap;
 import java.util.Map;

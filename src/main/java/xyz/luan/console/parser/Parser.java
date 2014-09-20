@@ -1,4 +1,4 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,15 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import xya.luan.console.parser.config.ConfigKeyword;
-import xya.luan.console.parser.config.HelpKeyword;
+import xyz.luan.console.parser.config.ConfigKeyword;
+import xyz.luan.console.parser.config.HelpKeyword;
 
 public class Parser implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 4644666847148733579L;
+
     private Map<String, String> aliases;
     private List<Callable> callables;
 

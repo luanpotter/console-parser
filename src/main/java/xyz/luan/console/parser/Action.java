@@ -1,14 +1,12 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Action implements Callable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5347353630808864913L;
+
     private String description;
     private Pattern pattern;
     private Call predefCall;

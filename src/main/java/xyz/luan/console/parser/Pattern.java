@@ -1,14 +1,13 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Pattern implements Serializable {
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = 1722841935156285867L;
+
     private String[] sections;
     private boolean continuous;
 

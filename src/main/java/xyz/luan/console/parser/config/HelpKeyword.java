@@ -1,6 +1,6 @@
-package xya.luan.console.parser.config;
+package xyz.luan.console.parser.config;
 
-import xya.luan.console.parser.Keyword;
+import xyz.luan.console.parser.Keyword;
 
 public enum HelpKeyword implements Keyword {
     LIST("help:list"), SHOW("help:show");

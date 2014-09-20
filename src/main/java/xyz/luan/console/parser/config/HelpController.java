@@ -1,15 +1,15 @@
-package xya.luan.console.parser.config;
+package xyz.luan.console.parser.config;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import xya.luan.console.parser.Action;
-import xya.luan.console.parser.Callable;
-import xya.luan.console.parser.Context;
-import xya.luan.console.parser.Controller;
-import xya.luan.console.parser.Output;
-import xya.luan.console.parser.Pattern;
+import xyz.luan.console.parser.Action;
+import xyz.luan.console.parser.Callable;
+import xyz.luan.console.parser.Context;
+import xyz.luan.console.parser.Controller;
+import xyz.luan.console.parser.Output;
+import xyz.luan.console.parser.Pattern;
 
 public class HelpController extends Controller<Context> {
 

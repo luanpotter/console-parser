@@ -1,4 +1,4 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,10 +7,8 @@ import java.io.Serializable;
 
 public abstract class Context implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -893098040420691058L;
+
     protected Parser parser;
     protected Caller caller;
 

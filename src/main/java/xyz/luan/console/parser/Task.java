@@ -1,14 +1,12 @@
-package xya.luan.console.parser;
+package xyz.luan.console.parser;
 
 import java.util.List;
 import java.util.Map;
 
 public class Task implements Callable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -4785830935180783565L;
+
     private String description;
     private Pattern pattern;
     private List<Action> actions;
