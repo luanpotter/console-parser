@@ -6,21 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import xyz.luan.console.parser.config.ConfigKeyword;
-import xyz.luan.console.parser.config.HelpKeyword;
-
 public class Parser implements Serializable {
 
     private static final long serialVersionUID = 4644666847148733579L;
 
     private Map<String, String> aliases;
     private List<Callable> callables;
-
-    public static final List<Class<? extends Keyword>> KEYWORD_LIST = new ArrayList<>();
-    static {
-        KEYWORD_LIST.add(HelpKeyword.class);
-        KEYWORD_LIST.add(ConfigKeyword.class);
-    }
 
     public Parser() {
         this(new HashMap<String, String>(), new ArrayList<Callable>());
@@ -57,43 +48,6 @@ public class Parser implements Serializable {
         } else {
             return false;
         }
-    }
-
-    public static Class<? extends Keyword> getGroupByName(String group) {
-        for (Class<? extends Keyword> keywordEnum : KEYWORD_LIST) {
-            if (keywordEnum.getSimpleName().equals(group)) {
-                return keywordEnum;
-            }
-        }
-        return null;
-    }
-
-    public static Keyword getKeywordByNameAndGroup(Class<? extends Keyword> group, String name) {
-        for (Keyword keyword : group.getEnumConstants()) {
-            if (keyword.toString().equals(name)) {
-                return keyword;
-            }
-        }
-        return null;
-    }
-
-    public static Output listKeywordsForGroup(Class<? extends Keyword> group) {
-        Output out = new Output();
-        for (Keyword keyword : group.getEnumConstants()) {
-            out.add(keyword.toString());
-        }
-        return out;
-    }
-
-    public static Output listKeywords() {
-        Output out = new Output();
-        for (Class<? extends Keyword> group : KEYWORD_LIST) {
-            out.add(group.getSimpleName());
-            out.tabIn();
-            out.append(listKeywordsForGroup(group));
-            out.tabOut();
-        }
-        return out;
     }
 
     public Output listCallables() {

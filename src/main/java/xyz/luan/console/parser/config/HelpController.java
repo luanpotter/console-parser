@@ -1,34 +1,31 @@
 package xyz.luan.console.parser.config;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import xyz.luan.console.parser.Action;
+import xyz.luan.console.parser.ActionCall;
+import xyz.luan.console.parser.ActionRef;
 import xyz.luan.console.parser.Callable;
 import xyz.luan.console.parser.Context;
 import xyz.luan.console.parser.Controller;
 import xyz.luan.console.parser.Output;
 import xyz.luan.console.parser.Pattern;
+import xyz.luan.console.parser.actions.Action;
+import xyz.luan.console.parser.actions.Required;
 
 public class HelpController extends Controller<Context> {
 
-    public Output list(Map<String, String> args) {
-        Controller.empty(args);
+    @Action("list")
+    public Output list() {
         return context.getParser().listCallables();
     }
 
-    public Output show(Map<String, String> args) {
-        Controller.required(args, "command");
-        return context.getParser().listCallables(args.get("command"));
+    @Action("show")
+    public Output show(@Required String command) {
+        return context.getParser().listCallables(command);
     }
 
-    public static List<Callable> getDefaultActions() {
-        List<Callable> callables = new ArrayList<>(1);
-
-        callables.add(new Action(HelpKeyword.LIST, new Pattern(":help"), "List all callables"));
-        callables.add(new Action(HelpKeyword.SHOW, new Pattern(":help command", true), "List all callables starting with command"));
-
-        return callables;
+    public static void defaultActions(String name, List<Callable> callables) {
+        callables.add(new ActionCall(name + ":list", ":help", "List all callables"));
+        callables.add(new ActionCall(new ActionRef(name, "show"), new Pattern(":help command", true), "List all callables starting with command"));
     }
 }

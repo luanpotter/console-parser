@@ -4,20 +4,22 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import xyz.luan.console.parser.actions.InvalidCall;
+
 public class Call implements Serializable {
 
     private static final long serialVersionUID = -1477714211952802085L;
 
-    private Keyword keyword;
+    private ActionRef actionRef;
     private Map<String, String> args;
 
-    public Call(Keyword keyword, Map<String, String> args) {
-        this.keyword = keyword;
+    public Call(ActionRef actionRef, Map<String, String> args) {
+        this.actionRef = actionRef;
         this.args = args;
     }
 
-    public Keyword getKeyword() {
-        return keyword;
+    public ActionRef getActionRef() {
+        return actionRef;
     }
 
     public Map<String, String> getArgs() {
@@ -28,6 +30,15 @@ public class Call implements Serializable {
         Map<String, String> args = new HashMap<>(this.args);
         args.putAll(newArgs);
 
-        return new Call(this.keyword, args);
+        return new Call(this.actionRef, args);
+    }
+
+    public Output invoke(Map<String, ControllerRef<?>> controllers) {
+        ControllerRef<?> controller = controllers.get(actionRef.getController());
+        if (controller == null) {
+            InvalidCall ex = new InvalidCall(String.format("Controller '%s' not found", actionRef.getController()));
+            return ExceptionHandler.handleController(ex, actionRef.getController());
+        }
+        return controller.call(actionRef.getAction(), args);
     }
 }

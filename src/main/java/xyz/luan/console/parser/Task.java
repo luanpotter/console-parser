@@ -9,9 +9,9 @@ public class Task implements Callable {
 
     private String description;
     private Pattern pattern;
-    private List<Action> actions;
+    private List<ActionCall> actions;
 
-    public Task(Pattern pattern, List<Action> actions, String description) {
+    public Task(Pattern pattern, List<ActionCall> actions, String description) {
         this.pattern = pattern;
         this.actions = actions;
         this.description = description;

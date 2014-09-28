@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import xyz.luan.console.parser.actions.InvalidCall;
+
 public final class ExceptionHandler {
 
     public static final Map<Class<? extends Throwable>, Function<Throwable, Output>> HANDLERS = new HashMap<>();
+    static {
+        HANDLERS.put(InvalidCall.class, ex -> new Output(ex.getMessage()));
+    }
 
     public static Output handleController(Throwable e, String controller) {
         if (e.getClass().equals(InvocationTargetException.class)) {

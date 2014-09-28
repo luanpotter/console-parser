@@ -3,7 +3,7 @@ package xyz.luan.console.parser;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Action implements Callable {
+public class ActionCall implements Callable {
 
     private static final long serialVersionUID = 5347353630808864913L;
 
@@ -12,17 +12,25 @@ public class Action implements Callable {
     private Call predefCall;
     private Map<String, String> argsMapping;
 
-    public Action(Keyword keyword, Pattern pattern, String description) {
-        this(keyword, pattern, new HashMap<String, String>(), description);
+    public ActionCall(String actionRef, String pattern, String description) {
+        this(actionRef, pattern, new HashMap<>(), description);
     }
 
-    public Action(Keyword keyword, Pattern pattern, Map<String, String> argsValues, String description) {
-        this(keyword, pattern, argsValues, null, description);
+    public ActionCall(String actionRef, String pattern, Map<String, String> argsValues, String description) {
+        this(new ActionRef(actionRef), new Pattern(pattern), argsValues, description);
+    }
+    
+    public ActionCall(ActionRef actionRef, Pattern pattern, String description) {
+        this(actionRef, pattern, new HashMap<>(), description);
     }
 
-    public Action(Keyword keyword, Pattern pattern, Map<String, String> argsValues, Map<String, String> argsMapping, String description) {
+    public ActionCall(ActionRef actionRef, Pattern pattern, Map<String, String> argsValues, String description) {
+        this(actionRef, pattern, argsValues, null, description);
+    }
+
+    public ActionCall(ActionRef actionRef, Pattern pattern, Map<String, String> argsValues, Map<String, String> argsMapping, String description) {
         this.pattern = pattern;
-        this.predefCall = new Call(keyword, argsValues);
+        this.predefCall = new Call(actionRef, argsValues);
         this.argsMapping = argsMapping;
         this.description = description;
     }
