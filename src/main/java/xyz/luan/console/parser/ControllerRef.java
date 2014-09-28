@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import xyz.luan.console.parser.actions.Action;
+import xyz.luan.console.parser.actions.Arg;
 import xyz.luan.console.parser.actions.ArgumentParser;
 import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidCall;
 import xyz.luan.console.parser.actions.InvalidParameter;
-import xyz.luan.console.parser.actions.Required;
+import xyz.luan.console.parser.actions.Optional;
 
 public class ControllerRef<T extends Controller<?>> {
 
@@ -51,12 +52,25 @@ public class ControllerRef<T extends Controller<?>> {
         Object[] actualParamValues = new Object[paramData.length];
         assert paramData.length == actualParamValues.length;
         for (int i = 0; i < actualParamValues.length; i++) {
-            boolean required = method.getAnnotation(Required.class) != null;
-            String name = paramData[i].getName();
+            boolean required;
+            String name;
+
+            Arg arg = paramData[i].getAnnotation(Arg.class);
+            if (arg != null) {
+                required = arg.required();
+                name = arg.value();                
+            } else {
+                if (!paramData[i].isNamePresent()) {
+                    throw new InvalidCall(method, "Unless you use @Arg on every param, you must turn on -parameters on Java so we can access the names of your parameters.");
+                }
+                required = paramData[i].getAnnotation(Optional.class) == null;
+                name = paramData[i].getName();
+            }
+
             String value = rawParamValues.get(name);
             if (value == null) {
                 if (required) {
-                    throw new InvalidCall(method, "");
+                    throw new InvalidCall(method, "The parameter " + name + " is required.");
                 }
                 actualParamValues[i] = null;
             } else {

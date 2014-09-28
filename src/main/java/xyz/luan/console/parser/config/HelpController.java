@@ -10,7 +10,7 @@ import xyz.luan.console.parser.Controller;
 import xyz.luan.console.parser.Output;
 import xyz.luan.console.parser.Pattern;
 import xyz.luan.console.parser.actions.Action;
-import xyz.luan.console.parser.actions.Required;
+import xyz.luan.console.parser.actions.Arg;
 
 public class HelpController extends Controller<Context> {
 
@@ -20,7 +20,7 @@ public class HelpController extends Controller<Context> {
     }
 
     @Action("show")
-    public Output show(@Required String command) {
+    public Output show(@Arg("command") String command) {
         return context.getParser().listCallables(command);
     }
 
