@@ -27,7 +27,15 @@ public abstract class Context implements Serializable {
         return this.caller;
     }
 
-    public void main() {
+    public void run(String[] args) {
+    	if (args.length != 0) {
+    		execute(args);
+    	} else {
+    		loop();
+    	}
+    }
+    
+    public void loop() {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             this.print("Ohayou!");
             while (true) {
