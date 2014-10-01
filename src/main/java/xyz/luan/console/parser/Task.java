@@ -18,7 +18,7 @@ public class Task implements Callable {
     }
 
     @Override
-    public Call[] parse(String[] args, Map<String, String> aliases) {
+    public Call parse(String[] args, Map<String, String> aliases) {
         Map<String, String> map = pattern.parse(args, aliases);
         if (map == null) {
             return null;
@@ -29,7 +29,7 @@ public class Task implements Callable {
             calls[i] = actions.get(i).parseAction(args, map);
         }
 
-        return calls;
+        return new MultipleCalls(calls, MultipleCalls.Operator.ALL);
     }
 
     @Override

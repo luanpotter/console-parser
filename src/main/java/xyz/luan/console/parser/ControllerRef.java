@@ -17,6 +17,7 @@ public class ControllerRef<T extends Controller<?>> {
 
     private T controller;
     private Map<String, Method> actions;
+    // private Method exceptionHandler; TODO << exception handler
 
     public ControllerRef(T controller) throws InvalidAction {
         this.controller = controller;
@@ -33,7 +34,7 @@ public class ControllerRef<T extends Controller<?>> {
         }
     }
 
-    public Output call(String actionName, Map<String, String> rawParams) {
+    public CallResult call(String actionName, Map<String, String> rawParams) {
         try {
             Method method = actions.get(actionName);
             if (method == null) {
@@ -41,9 +42,10 @@ public class ControllerRef<T extends Controller<?>> {
             }
             Object[] actualParamValues = getActualParameterValues(method, rawParams);
             method.setAccessible(true);
-            return (Output) method.invoke(controller, actualParamValues);
+            return (CallResult) method.invoke(controller, actualParamValues);
         } catch (Throwable e) {
-            return ExceptionHandler.handleController(e, controller.getClass().getCanonicalName());
+            throw new RuntimeException(""); //TODO << exception handler
+            //return ExceptionHandler.handleController(e, controller.getClass().getCanonicalName());
         }
     }
 
@@ -92,7 +94,7 @@ public class ControllerRef<T extends Controller<?>> {
             }
         }
         
-        if (!method.getReturnType().equals(Output.class)) {
+        if (!method.getReturnType().equals(CallResult.class)) {
             throw new InvalidAction(method, "must always return Output object");
         }
     }

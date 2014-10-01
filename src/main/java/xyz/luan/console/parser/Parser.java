@@ -22,15 +22,15 @@ public class Parser implements Serializable {
         this.callables = callables;
     }
 
-    public Call[] parse(String[] args) {
+    public Call parse(String[] args) {
         if (args.length < 1) {
             return null;
         }
 
         for (Callable c : callables) {
-            Call[] calls = c.parse(args, aliases);
-            if (calls != null) {
-                return calls;
+            Call call = c.parse(args, aliases);
+            if (call != null) {
+                return call;
             }
         }
 
@@ -50,27 +50,25 @@ public class Parser implements Serializable {
         }
     }
 
-    public Output listCallables() {
-        return this.listCallables("");
+    public CallResult listCallables(Console console) {
+        return this.listCallables(console, "");
     }
 
-    public Output listCallables(String start) {
-        Output out = new Output();
-
+    public CallResult listCallables(Console console, String start) {
         int actualStart = start.lastIndexOf(":");
         if (actualStart < 0) {
             actualStart = 0;
         }
 
-        out.add("Listing all callables" + (start.isEmpty() ? "" : " starting with '" + start + "'") + ":");
+        console.result("Listing all callables" + (start.isEmpty() ? "" : " starting with '" + start + "'") + ":");
         for (Callable c : callables) {
             String pattern = c.getPattern().toString();
             if (pattern.startsWith(start)) {
-                out.add(pattern.substring(actualStart) + " - " + c.getDescription());
+                console.result(pattern.substring(actualStart) + " - " + c.getDescription());
             }
         }
 
-        return out;
+        return CallResult.SUCCESS;
     }
 
     public boolean addAlias(String alias, String keyword) {
@@ -93,23 +91,21 @@ public class Parser implements Serializable {
         return this.aliases.get(alias);
     }
 
-    public Output listAliases() {
-        return listAliasesFor(null);
+    public CallResult listAliases(Console console) {
+        return listAliasesFor(console, null);
     }
 
-    public Output listAliasesFor(String keyword) {
-        Output output = new Output();
-
+    public CallResult listAliasesFor(Console console, String keyword) {
         for (Map.Entry<String, String> entry : aliases.entrySet()) {
             if (keyword == null) {
-                output.add(entry.getKey() + ": " + entry.getValue().substring(1));
+                console.result(entry.getKey() + ": " + entry.getValue().substring(1));
             } else {
                 if (keyword.equals(entry.getValue())) {
-                    output.add(entry.getKey());
+                    console.result(entry.getKey());
                 }
             }
         }
 
-        return output;
+        return CallResult.SUCCESS;
     }
 }

@@ -4,10 +4,10 @@ import java.util.List;
 
 import xyz.luan.console.parser.ActionCall;
 import xyz.luan.console.parser.ActionRef;
+import xyz.luan.console.parser.CallResult;
 import xyz.luan.console.parser.Callable;
 import xyz.luan.console.parser.Context;
 import xyz.luan.console.parser.Controller;
-import xyz.luan.console.parser.Output;
 import xyz.luan.console.parser.Pattern;
 import xyz.luan.console.parser.actions.Action;
 import xyz.luan.console.parser.actions.Arg;
@@ -15,13 +15,13 @@ import xyz.luan.console.parser.actions.Arg;
 public class HelpController extends Controller<Context> {
 
     @Action("list")
-    public Output list() {
-        return context.getParser().listCallables();
+    public CallResult list() {
+        return context.getParser().listCallables(console);
     }
 
     @Action("show")
-    public Output show(@Arg("command") String command) {
-        return context.getParser().listCallables(command);
+    public CallResult show(@Arg("command") String command) {
+        return context.getParser().listCallables(console, command);
     }
 
     public static void defaultActions(String name, List<Callable> callables) {

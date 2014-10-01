@@ -17,20 +17,7 @@ public class Caller {
         controllers.put(name, new ControllerRef<T>(controller));
     }
 
-    public Output call(Call[] calls) {
-        Output results = new Output();
-        if (calls == null) {
-            results.add("Command not recognized. Type help for help.");
-        } else {
-            for (Call call : calls) {
-                results.append(call(call));
-            }
-        }
-
-        return results;
-    }
-
-    public Output call(Call call) {
+    public CallResult call(Call call) {
         return call.invoke(controllers);
     }
 

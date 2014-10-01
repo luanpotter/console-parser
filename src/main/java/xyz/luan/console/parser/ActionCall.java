@@ -9,7 +9,7 @@ public class ActionCall implements Callable {
 
     private String description;
     private Pattern pattern;
-    private Call predefCall;
+    private SingleCall predefCall;
     private Map<String, String> argsMapping;
 
     public ActionCall(String actionRef, String pattern, String description) {
@@ -30,7 +30,7 @@ public class ActionCall implements Callable {
 
     public ActionCall(ActionRef actionRef, Pattern pattern, Map<String, String> argsValues, Map<String, String> argsMapping, String description) {
         this.pattern = pattern;
-        this.predefCall = new Call(actionRef, argsValues);
+        this.predefCall = new SingleCall(actionRef, argsValues);
         this.argsMapping = argsMapping;
         this.description = description;
     }
@@ -48,17 +48,12 @@ public class ActionCall implements Callable {
             map = realMap;
         }
 
-        return predefCall.newCall(map);
+        return predefCall.copy(map);
     }
 
     @Override
-    public Call[] parse(String[] args, Map<String, String> aliases) {
-        Call call = parseAction(args, pattern.parse(args, aliases));
-        if (call == null) {
-            return null;
-        } else {
-            return new Call[] { call };
-        }
+    public Call parse(String[] args, Map<String, String> aliases) {
+        return parseAction(args, pattern.parse(args, aliases));
     }
 
     @Override
