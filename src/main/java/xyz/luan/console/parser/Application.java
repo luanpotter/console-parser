@@ -14,7 +14,7 @@ public abstract class Application {
         Console console = createConsole();
         Context c = createContext();
         
-        if (args != null) {
+        if (args.length != 0) {
             c.execute(args);
         } else {
             console.message(startMessage());
@@ -29,12 +29,14 @@ public abstract class Application {
                 CallResult r = c.execute(cmd);
                 if (r == CallResult.QUIT) {
                     break;
+                } else if (r == CallResult.INVALID_COMMAND) {
+                    console.error("Invalid command. Type help for a list of valid operations.");
                 }
             }
 
             console.message(endMessage());
         }
         
-        console.flush();
+        console.exit();
     }
 }

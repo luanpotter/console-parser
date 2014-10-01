@@ -9,5 +9,5 @@ public interface Console {
     public String read();
     public char[] readPassword();
     
-    public void flush();
+    public void exit();
 }

@@ -18,6 +18,9 @@ public class Caller {
     }
 
     public CallResult call(Call call) {
+        if (call == null) {
+            return CallResult.INVALID_COMMAND;
+        }
         return call.invoke(controllers);
     }
 
