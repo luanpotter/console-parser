@@ -1,6 +1,8 @@
 package xyz.luan.console.parser;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,30 +12,69 @@ import xyz.luan.console.parser.actions.Arg;
 import xyz.luan.console.parser.actions.ArgumentParser;
 import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidCall;
+import xyz.luan.console.parser.actions.InvalidHandler;
 import xyz.luan.console.parser.actions.InvalidParameter;
 import xyz.luan.console.parser.actions.Optional;
 import xyz.luan.console.parser.call.CallResult;
+import xyz.luan.console.parser.util.ClassMap;
 
 public class ControllerRef<T extends Controller<?>> {
 
     private T controller;
     private Map<String, Method> actions;
-    // private Method exceptionHandler; TODO << exception handler
+    private Map<Class<? extends Throwable>, Method> handlers;
 
-    public ControllerRef(T controller) throws InvalidAction {
+    public ControllerRef(T controller) throws InvalidAction, InvalidHandler {
         this.controller = controller;
         this.actions = new HashMap<>();
+        this.handlers = new HashMap<>();
         for (Method method : controller.getClass().getMethods()) {
-            Action action = method.getAnnotation(Action.class);
-            if (action != null) {
-                validateActionMethod(method);
-                if (this.actions.get(action.value()) != null) {
-                    throw new InvalidAction("Two actions on the same controller same action name...");
-                }
-                this.actions.put(action.value(), method);
-            }
+            parseAction(method);
+            parseHandler(method);
         }
     }
+
+	private void parseHandler(Method method) throws InvalidHandler {
+		ExceptionHandler handler = method.getAnnotation(ExceptionHandler.class);
+		if (handler != null) {
+			assertValidHandlerMethod(method, handler);
+			for (Class<? extends Throwable> c : handler.value()) {
+				if (handlers.get(c) != null) {
+					throw new InvalidHandler("Trying to register two handlers to the same exception type: " + c.getSimpleName());
+				}
+				handlers.put(c, method);
+			}
+		}
+	}
+
+	private void assertValidHandlerMethod(Method method, ExceptionHandler handler) throws InvalidHandler {
+    	if (Modifier.isStatic(method.getModifiers())) {
+    		throw new InvalidHandler(method, "should not be static");
+    	}
+		if (method.getParameters().length != 1) {
+			throw new InvalidHandler(method, "must take exactly one parameter: the exception to be handle");
+		}
+		Class<?> parameterType = method.getParameters()[0].getType();
+		for (Class<? extends Throwable> c : handler.value()) {
+			if (!parameterType.isAssignableFrom(c)) {
+				throw new InvalidHandler(method, String.format("the parameter must be a supertype common to all @ExceptionHandler exceptions; type '%s' can't be cast from '%s'.", c.getSimpleName(), parameterType.getSimpleName()));
+			}	
+		}
+        if (!method.getReturnType().equals(CallResult.class)) {
+            throw new InvalidHandler(method, "must always return Output object");
+        }
+	}
+
+	private void parseAction(Method method) throws InvalidAction {
+		Action action = method.getAnnotation(Action.class);
+		if (action != null) {
+		    assertValidateActionMethod(method);
+		    if (this.actions.get(action.value()) != null) {
+		        throw new InvalidAction("Two actions on the same controller same action name: " + action.value());
+		    }
+		    this.actions.put(action.value(), method);
+		}
+	}
 
     public CallResult call(String actionName, Map<String, String> rawParams) {
         try {
@@ -45,8 +86,18 @@ public class ControllerRef<T extends Controller<?>> {
             method.setAccessible(true);
             return (CallResult) method.invoke(controller, actualParamValues);
         } catch (Throwable e) {
-            throw new RuntimeException(""); //TODO << exception handler
-            //return ExceptionHandler.handleController(e, controller.getClass().getCanonicalName());
+        	if (e instanceof InvocationTargetException) {
+        		e = e.getCause();
+        	}
+        	Method handler = ClassMap.getFromClassMap(handlers, e.getClass());
+        	if (handler == null) {
+        		throw e instanceof RuntimeException ? (RuntimeException) e : new RuntimeException(e);
+        	}
+        	try {
+				return (CallResult) handler.invoke(controller, e);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+				throw new RuntimeException("Exception handler threw an exception! Run for your lives!", e1);
+			}
         }
     }
 
@@ -87,7 +138,11 @@ public class ControllerRef<T extends Controller<?>> {
         return actualParamValues;
     }
     
-    private void validateActionMethod(Method method) throws InvalidAction {
+    private void assertValidateActionMethod(Method method) throws InvalidAction {
+    	if (Modifier.isStatic(method.getModifiers())) {
+    		throw new InvalidAction(method, "should not be static");
+    	}
+
         for (Parameter param : method.getParameters()) {
             if (!ArgumentParser.hasParser(param.getType())) {
                 String message = String.format("invalid parameter type '%s'; not registered on ArgumentParser", param.getType());

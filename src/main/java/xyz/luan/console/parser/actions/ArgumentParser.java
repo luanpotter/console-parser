@@ -3,6 +3,8 @@ package xyz.luan.console.parser.actions;
 import java.util.HashMap;
 import java.util.Map;
 
+import xyz.luan.console.parser.util.ClassMap;
+
 public class ArgumentParser {
 
     public static final Map<Class<?>, Parser<?>> parsers;
@@ -41,23 +43,6 @@ public class ArgumentParser {
     }
 
     private static Parser<?> getParser(Class<?> originalClass) {
-        Class<?> clazz = originalClass;
-        Parser<?> parser = parsers.get(clazz);
-        while (parser == null) {
-            parser = parsers.get(clazz = clazz.getSuperclass());
-            if (clazz.equals(Object.class)) {
-                break;
-            }
-        }
-        if (parser == null) {
-            Class<?>[] its = originalClass.getClass().getInterfaces();
-            for (Class<?> it : its) {
-                parser = parsers.get(it);
-                if (parser != null) {
-                    break;
-                }
-            }
-        }
-        return parser;
+    	return ClassMap.getFromClassMap(parsers, originalClass);
     }
 }

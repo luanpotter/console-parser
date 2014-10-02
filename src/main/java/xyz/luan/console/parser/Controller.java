@@ -1,5 +1,8 @@
 package xyz.luan.console.parser;
 
+import xyz.luan.console.parser.actions.InvalidCall;
+import xyz.luan.console.parser.actions.InvalidHandler;
+import xyz.luan.console.parser.call.CallResult;
 
 public abstract class Controller<T extends Context> {
 
@@ -10,5 +13,11 @@ public abstract class Controller<T extends Context> {
         this.context = context;
         this.console = console;
         return this;
+    }
+ 
+    @ExceptionHandler({InvalidCall.class, InvalidHandler.class})
+    public CallResult handleInvalidMethod(Exception ex) {
+    	console.error(ex.getMessage());
+    	return CallResult.ERROR;
     }
 }

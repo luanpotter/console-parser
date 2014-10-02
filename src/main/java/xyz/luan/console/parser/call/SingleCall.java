@@ -30,8 +30,7 @@ public class SingleCall implements Call {
         ControllerRef<?> controller = controllers.get(actionRef.getController());
         if (controller == null) {
             InvalidCall ex = new InvalidCall(String.format("Controller '%s' not found", actionRef.getController()));
-            throw new RuntimeException(ex); //TODO exception handling
-            //return ExceptionHandler.handleController(ex, actionRef.getController());
+            throw new RuntimeException(ex);
         }
         return controller.call(actionRef.getAction(), args);
     }
