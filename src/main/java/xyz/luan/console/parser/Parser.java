@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import xyz.luan.console.parser.call.Call;
+import xyz.luan.console.parser.call.CallResult;
+import xyz.luan.console.parser.callable.Callable;
+
 public class Parser implements Serializable {
 
     private static final long serialVersionUID = 4644666847148733579L;

@@ -1,8 +1,10 @@
-package xyz.luan.console.parser;
+package xyz.luan.console.parser.call;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import xyz.luan.console.parser.ControllerRef;
+import xyz.luan.console.parser.actions.ActionRef;
 import xyz.luan.console.parser.actions.InvalidCall;
 
 public class SingleCall implements Call {

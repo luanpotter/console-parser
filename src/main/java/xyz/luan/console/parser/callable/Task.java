@@ -1,7 +1,10 @@
-package xyz.luan.console.parser;
+package xyz.luan.console.parser.callable;
 
 import java.util.List;
 import java.util.Map;
+
+import xyz.luan.console.parser.call.Call;
+import xyz.luan.console.parser.call.MultipleCalls;
 
 public class Task implements Callable {
 

@@ -1,4 +1,4 @@
-package xyz.luan.console.parser;
+package xyz.luan.console.parser.actions;
 
 import java.io.Serializable;
 

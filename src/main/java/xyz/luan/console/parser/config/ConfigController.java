@@ -2,13 +2,13 @@ package xyz.luan.console.parser.config;
 
 import java.util.List;
 
-import xyz.luan.console.parser.ActionCall;
-import xyz.luan.console.parser.CallResult;
-import xyz.luan.console.parser.Callable;
 import xyz.luan.console.parser.Context;
 import xyz.luan.console.parser.Controller;
 import xyz.luan.console.parser.actions.Action;
 import xyz.luan.console.parser.actions.Arg;
+import xyz.luan.console.parser.call.CallResult;
+import xyz.luan.console.parser.callable.ActionCall;
+import xyz.luan.console.parser.callable.Callable;
 
 public class ConfigController extends Controller<Context> {
 

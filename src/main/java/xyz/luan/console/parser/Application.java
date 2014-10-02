@@ -1,5 +1,7 @@
 package xyz.luan.console.parser;
 
+import xyz.luan.console.parser.call.CallResult;
+
 public abstract class Application {
 
     public abstract Console createConsole();
@@ -8,7 +10,7 @@ public abstract class Application {
     public abstract String startMessage();
     public abstract String endMessage();
 
-    public abstract boolean emptyLineHandler();
+    public abstract CallResult emptyLineHandler();
     
     public void run(String[] args) {
         Console console = createConsole();
@@ -21,12 +23,7 @@ public abstract class Application {
             
             for (;;) {
                 String cmd = console.read();
-                if (cmd.isEmpty()) {
-                    if (emptyLineHandler()) {
-                        break;
-                    }
-                }
-                CallResult r = c.execute(cmd);
+                CallResult r = cmd.isEmpty() ? emptyLineHandler() : c.execute(cmd);
                 if (r == CallResult.QUIT) {
                     break;
                 } else if (r == CallResult.INVALID_COMMAND) {

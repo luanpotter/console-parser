@@ -12,6 +12,7 @@ import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidCall;
 import xyz.luan.console.parser.actions.InvalidParameter;
 import xyz.luan.console.parser.actions.Optional;
+import xyz.luan.console.parser.call.CallResult;
 
 public class ControllerRef<T extends Controller<?>> {
 

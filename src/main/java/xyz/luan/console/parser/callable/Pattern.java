@@ -1,4 +1,4 @@
-package xyz.luan.console.parser;
+package xyz.luan.console.parser.callable;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -2,6 +2,9 @@ package xyz.luan.console.parser;
 
 import java.io.Serializable;
 
+import xyz.luan.console.parser.call.CallResult;
+import xyz.luan.console.parser.call.Caller;
+
 public abstract class Context implements Serializable {
 
     private static final long serialVersionUID = -893098040420691058L;
