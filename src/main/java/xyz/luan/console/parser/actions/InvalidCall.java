@@ -1,7 +1,5 @@
 package xyz.luan.console.parser.actions;
 
-import java.lang.reflect.Method;
-
 public class InvalidCall extends Exception {
 
     private static final long serialVersionUID = -1847854306985567286L;
@@ -10,12 +8,12 @@ public class InvalidCall extends Exception {
         super(message);
     }
     
-    public InvalidCall(Method method, Exception cause) {
-        super("Invalid call of method '" + method + "'; error: " + cause.getMessage(), cause);
+    public InvalidCall(String action, Exception cause) {
+        super("Invalid call of action '" + action + "'; error: " + cause.getMessage(), cause);
     }
 
-    public InvalidCall(Method method, String message) {
-        super("Invalid call of method '" + method + "'; error: " + message);
+    public InvalidCall(String action, String message) {
+        super("Invalid call of method '" + action + "'; error: " + message);
     }
 
 }

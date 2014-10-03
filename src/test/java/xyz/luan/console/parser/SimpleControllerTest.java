@@ -61,6 +61,15 @@ public class SimpleControllerTest {
 		final String[] expected = build("r:You should be about " + expectedAge + " years old.");
 		Assert.assertArrayEquals(expected, application.getConsole().results());
 	}
+
+	@Test
+	public void testIntegerParameterInvalid() {
+		application.getConsole().push("simple eval age three").push("");
+		application.run();
+
+		final String[] expected = build("e:Invalid call of action 'simple:age'; error:  expected a 'Integer' but value found 'three' can't be converted.");
+		Assert.assertArrayEquals(expected, application.getConsole().results());
+	}
 	
 	@Test
 	public void testCustomColorParameter() {
@@ -68,6 +77,15 @@ public class SimpleControllerTest {
 		application.run();
 
 		final String[] expected = build("r:0c1843");
+		Assert.assertArrayEquals(expected, application.getConsole().results());
+	}
+
+	@Test
+	public void testInvalidPattern() {
+		application.getConsole().push("simple blah 123").push("");
+		application.run();
+
+		final String[] expected = build("e:Invalid command. Type help for a list of valid operations.");
 		Assert.assertArrayEquals(expected, application.getConsole().results());
 	}
 }

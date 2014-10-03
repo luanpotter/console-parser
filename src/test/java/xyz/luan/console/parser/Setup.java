@@ -25,7 +25,11 @@ public final class Setup {
 			@Override
 			public Color parse(String s) throws InvalidParameter {
 				String[] components = s.substring(1, s.length() - 1).split(",");
-				return new Color(Integer.parseInt(components[0].trim()), Integer.parseInt(components[1].trim()), Integer.parseInt(components[2].trim()));
+				return new Color(getComponent(components[0]), getComponent(components[1]), getComponent(components[2]));
+			}
+
+			private int getComponent(String value) {
+				return Integer.parseInt(value.trim());
 			}
 		});
 

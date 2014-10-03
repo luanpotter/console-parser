@@ -17,7 +17,7 @@ public class Caller {
     }
 
     public <T extends Controller<?>> void registerClass(String name, T controller) throws InvalidAction, InvalidHandler {
-        controllers.put(name, new ControllerRef<T>(controller));
+        controllers.put(name, new ControllerRef<T>(name, controller));
     }
 
     public CallResult call(Call call) {

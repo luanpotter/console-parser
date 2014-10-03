@@ -20,11 +20,13 @@ import xyz.luan.console.parser.util.ClassMap;
 
 public class ControllerRef<T extends Controller<?>> {
 
+	private String name;
     private T controller;
     private Map<String, Method> actions;
     private Map<Class<? extends Throwable>, Method> handlers;
 
-    public ControllerRef(T controller) throws InvalidAction, InvalidHandler {
+    public ControllerRef(String name, T controller) throws InvalidAction, InvalidHandler {
+    	this.name = name;
         this.controller = controller;
         this.actions = new HashMap<>();
         this.handlers = new HashMap<>();
@@ -82,7 +84,7 @@ public class ControllerRef<T extends Controller<?>> {
             if (method == null) {
                 throw new InvalidCall(String.format("Action name '%s' not found in controller '%s'", actionName, controller.getClass().getCanonicalName()));
             }
-            Object[] actualParamValues = getActualParameterValues(method, rawParams);
+            Object[] actualParamValues = getActualParameterValues(name + ":" + actionName, method, rawParams);
             method.setAccessible(true);
             return (CallResult) method.invoke(controller, actualParamValues);
         } catch (Throwable e) {
@@ -101,7 +103,7 @@ public class ControllerRef<T extends Controller<?>> {
         }
     }
 
-    private Object[] getActualParameterValues(Method method, Map<String, String> rawParamValues) throws InvalidCall {
+    private Object[] getActualParameterValues(String ref, Method method, Map<String, String> rawParamValues) throws InvalidCall {
         Parameter[] paramData = method.getParameters();
         Object[] actualParamValues = new Object[paramData.length];
         assert paramData.length == actualParamValues.length;
@@ -115,7 +117,7 @@ public class ControllerRef<T extends Controller<?>> {
                 name = arg.value();                
             } else {
                 if (!paramData[i].isNamePresent()) {
-                    throw new InvalidCall(method, "Unless you use @Arg on every param, you must turn on -parameters on Java so we can access the names of your parameters.");
+                    throw new InvalidCall(ref, "Unless you use @Arg on every param, you must turn on -parameters on Java so we can access the names of your parameters.");
                 }
                 required = paramData[i].getAnnotation(Optional.class) == null;
                 name = paramData[i].getName();
@@ -124,14 +126,14 @@ public class ControllerRef<T extends Controller<?>> {
             String value = rawParamValues.get(name);
             if (value == null) {
                 if (required) {
-                    throw new InvalidCall(method, "The parameter " + name + " is required.");
+                    throw new InvalidCall(ref, "The parameter " + name + " is required.");
                 }
                 actualParamValues[i] = null;
             } else {
                 try {
                     actualParamValues[i] = ArgumentParser.parse(value, paramData[i].getType());
                 } catch (InvalidParameter e) {
-                    throw new InvalidCall(method, e);
+                    throw new InvalidCall(ref, e);
                 }
             }
         }
