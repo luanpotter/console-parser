@@ -70,6 +70,16 @@ public class SimpleControllerTest {
 		final String[] expected = build("e:Invalid call of action 'simple:age'; error:  expected a 'Integer' but value found 'three' can't be converted.");
 		Assert.assertArrayEquals(expected, application.getConsole().results());
 	}
+
+	@Test
+	public void testExceptionThrown() {
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		application.getConsole().push("simple eval age " + (year + 10)).push("");
+		application.run();
+
+		final String[] expected = build("e:Sorry, our program does not allow time travelers... Come back again after you are born.");
+		Assert.assertArrayEquals(expected, application.getConsole().results());
+	}
 	
 	@Test
 	public void testCustomColorParameter() {
