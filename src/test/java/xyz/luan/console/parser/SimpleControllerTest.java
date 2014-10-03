@@ -1,8 +1,9 @@
 package xyz.luan.console.parser;
 
+import java.util.Calendar;
+
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import xyz.luan.console.parser.actions.InvalidAction;
@@ -51,13 +52,22 @@ public class SimpleControllerTest {
 		Assert.assertArrayEquals(expected, application.getConsole().results());
 	}
 
-	@Test @Ignore
+	@Test
 	public void testIntegerParameter() {
 		application.getConsole().push("simple eval age 1990").push("");
 		application.run();
 
-		final String[] expected = build("e:I shall fail!");
+		int expectedAge = Calendar.getInstance().get(Calendar.YEAR) - 1990;
+		final String[] expected = build("r:You should be about " + expectedAge + " years old.");
 		Assert.assertArrayEquals(expected, application.getConsole().results());
 	}
+	
+	@Test
+	public void testCustomColorParameter() {
+		application.getConsole().push("simple hex [12, 24, 67]").push("");
+		application.run();
 
+		final String[] expected = build("r:0c1843");
+		Assert.assertArrayEquals(expected, application.getConsole().results());
+	}
 }

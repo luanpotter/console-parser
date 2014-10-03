@@ -129,7 +129,7 @@ public class ControllerRef<T extends Controller<?>> {
                 actualParamValues[i] = null;
             } else {
                 try {
-                    actualParamValues[i] = ArgumentParser.parse(value);
+                    actualParamValues[i] = ArgumentParser.parse(value, paramData[i].getType());
                 } catch (InvalidParameter e) {
                     throw new InvalidCall(method, e);
                 }

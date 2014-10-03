@@ -7,17 +7,17 @@ import xyz.luan.console.parser.util.ClassMap;
 
 public class ArgumentParser {
 
-    public static final Map<Class<?>, Parser<?>> parsers;
+    public static final Map<Class<?>, CustomParser<?>> parsers;
     static {
         parsers = new HashMap<>();
 
-        parsers.put(String.class, new Parser<String>() {
+        parsers.put(String.class, new CustomParser<String>() {
             @Override
             public String parse(String s) {
                 return s;
             }
         });
-        parsers.put(Integer.class, new Parser<Integer>() {
+        parsers.put(Integer.class, new CustomParser<Integer>() {
             @Override
             public Integer parse(String s) throws InvalidParameter {
                 try {
@@ -29,7 +29,7 @@ public class ArgumentParser {
         });
     }
     
-    public interface Parser<T> {
+    public interface CustomParser<T> {
         T parse(String s) throws InvalidParameter;
     }
     
@@ -37,12 +37,15 @@ public class ArgumentParser {
         return getParser(c) != null;
     }
     
-    public static Object parse(String value) throws InvalidParameter {
-        Parser<?> parser = getParser(value.getClass());
+    public static Object parse(String value, Class<?> expected) throws InvalidParameter {
+        CustomParser<?> parser = getParser(expected);
+        if (parser == null) {
+        	throw new RuntimeException("Argument of type " + expected.getSimpleName() + " has no parser attached to it...");
+        }
         return parser.parse(value);
     }
 
-    private static Parser<?> getParser(Class<?> originalClass) {
+    private static CustomParser<?> getParser(Class<?> originalClass) {
     	return ClassMap.getFromClassMap(parsers, originalClass);
     }
 }

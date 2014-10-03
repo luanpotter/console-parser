@@ -1,11 +1,15 @@
 package xyz.luan.console.parser;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import xyz.luan.console.parser.actions.ArgumentParser;
+import xyz.luan.console.parser.actions.ArgumentParser.CustomParser;
 import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidHandler;
+import xyz.luan.console.parser.actions.InvalidParameter;
 import xyz.luan.console.parser.call.Caller;
 import xyz.luan.console.parser.callable.Callable;
 import xyz.luan.console.parser.controller.SimpleController;
@@ -17,6 +21,14 @@ public final class Setup {
 	}
 	
 	public static TestApplication setupSimpleControllerOnly() throws InvalidAction, InvalidHandler {
+		ArgumentParser.parsers.put(java.awt.Color.class, new CustomParser<java.awt.Color>() {
+			@Override
+			public Color parse(String s) throws InvalidParameter {
+				String[] components = s.substring(1, s.length() - 1).split(",");
+				return new Color(Integer.parseInt(components[0].trim()), Integer.parseInt(components[1].trim()), Integer.parseInt(components[2].trim()));
+			}
+		});
+
 		final TestConsole console = new TestConsole();
 		final Context context = new Context();
 
@@ -52,6 +64,7 @@ public final class Setup {
         aliases.put("fail", ":fail");
         aliases.put("eval", ":eval");
         aliases.put("age", ":age");
+        aliases.put("hex", ":toHex");
 
         return aliases;
     }
