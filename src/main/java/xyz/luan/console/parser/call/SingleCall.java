@@ -29,7 +29,7 @@ public class SingleCall implements Call {
     public CallResult invoke(Map<String, ControllerRef<?>> controllers) {
         ControllerRef<?> controller = controllers.get(actionRef.getController());
         if (controller == null) {
-            InvalidCall ex = new InvalidCall(String.format("Controller '%s' not found", actionRef.getController()));
+            InvalidCall ex = new InvalidCall(String.format("Controller '%s' not found. Did you add a a callable and forgot to register the Caller?", actionRef.getController()));
             throw new RuntimeException(ex);
         }
         return controller.call(actionRef.getAction(), args);
