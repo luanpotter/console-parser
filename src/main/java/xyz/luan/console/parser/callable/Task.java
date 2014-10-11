@@ -3,6 +3,7 @@ package xyz.luan.console.parser.callable;
 import java.util.List;
 import java.util.Map;
 
+import xyz.luan.console.parser.Aliases;
 import xyz.luan.console.parser.call.Call;
 import xyz.luan.console.parser.call.MultipleCalls;
 
@@ -21,7 +22,7 @@ public class Task implements Callable {
     }
 
     @Override
-    public Call parse(String[] args, Map<String, String> aliases) {
+    public Call parse(String[] args, Aliases aliases) {
         Map<String, String> map = pattern.parse(args, aliases);
         if (map == null) {
             return null;

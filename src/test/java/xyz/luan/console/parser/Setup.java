@@ -20,7 +20,7 @@ public final class Setup {
 		throw new RuntimeException("Should not be instanciated.");
 	}
 	
-	public static TestApplication setupSimpleControllerOnly() throws InvalidAction, InvalidHandler {
+	public static TestApplication setupSimpleControllerOnly(boolean enableDefaultAliases) throws InvalidAction, InvalidHandler {
 		ArgumentParser.parsers.put(java.awt.Color.class, new CustomParser<java.awt.Color>() {
 			@Override
 			public Color parse(String s) throws InvalidParameter {
@@ -36,15 +36,15 @@ public final class Setup {
 		final TestConsole console = new TestConsole();
 		final Context context = new Context();
 
-		Parser parser = defaultParser();
+		Parser parser = defaultParser(enableDefaultAliases);
 		Caller caller = defaultCaller(context, console);
 
 		context.setup(parser, caller);
 		return new TestApplication(console, context);
 	}
 	
-    public static Parser defaultParser() {
-        return new Parser(allAliases(), defaultCallables());
+    public static Parser defaultParser(boolean enableDefaultAliases) {
+        return new Parser(enableDefaultAliases, enableDefaultAliases ? new HashMap<>() : allAliases(), defaultCallables());
     }
 
     public static Caller defaultCaller(Context context, Console console) throws InvalidAction, InvalidHandler {

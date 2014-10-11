@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import xyz.luan.console.parser.Aliases;
+
 public class Pattern implements Serializable {
 
     private static final long serialVersionUID = 1722841935156285867L;
@@ -37,7 +39,7 @@ public class Pattern implements Serializable {
         }
     }
 
-    public Map<String, String> parse(String[] args, Map<String, String> aliases) {
+    public Map<String, String> parse(String[] args, Aliases aliases) {
         if (continuous) {
             if (sections.length > args.length) {
                 return null;

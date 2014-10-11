@@ -15,7 +15,7 @@ public class SimpleControllerTest {
 	
 	@Before
 	public void setup() throws InvalidAction, InvalidHandler {
-		application = Setup.setupSimpleControllerOnly();
+		application = Setup.setupSimpleControllerOnly(false);
 	}
 	
 	private String[] build(String... args) {
@@ -97,5 +97,11 @@ public class SimpleControllerTest {
 
 		final String[] expected = build("e:Invalid command. Type help for a list of valid operations.");
 		Assert.assertArrayEquals(expected, application.getConsole().results());
+	}
+	
+	@Test
+	public void testDefaultAliases() throws InvalidAction, InvalidHandler {
+	    application = Setup.setupSimpleControllerOnly(true);
+	    testSimpleActionInteractiveShell();
 	}
 }

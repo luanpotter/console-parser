@@ -14,15 +14,19 @@ public class Parser implements Serializable {
 
     private static final long serialVersionUID = 4644666847148733579L;
 
-    private Map<String, String> aliases;
+    private Aliases aliases;
     private List<Callable> callables;
 
     public Parser() {
-        this(new HashMap<String, String>(), new ArrayList<Callable>());
+        this(true, new HashMap<String, String>(), new ArrayList<Callable>());
     }
 
     public Parser(Map<String, String> aliases, List<Callable> callables) {
-        this.aliases = aliases;
+        this(false, aliases, callables);
+    }
+    
+    public Parser(boolean enableDefaultAliases, Map<String, String> aliases, List<Callable> callables) {
+        this.aliases = new Aliases(aliases, enableDefaultAliases);
         this.callables = callables;
     }
 
@@ -75,41 +79,8 @@ public class Parser implements Serializable {
         return CallResult.SUCCESS;
     }
 
-    public boolean addAlias(String alias, String keyword) {
-        if (this.aliases.get(alias) != null) {
-            return false;
-        }
-        this.aliases.put(alias, keyword);
-        return true;
+    public Aliases getAliases() {
+        return this.aliases;
     }
 
-    public boolean deleteAlias(String alias) {
-        if (this.aliases.get(alias) == null) {
-            return false;
-        }
-        this.aliases.remove(alias);
-        return true;
-    }
-
-    public String getAlias(String alias) {
-        return this.aliases.get(alias);
-    }
-
-    public CallResult listAliases(Console console) {
-        return listAliasesFor(console, null);
-    }
-
-    public CallResult listAliasesFor(Console console, String keyword) {
-        for (Map.Entry<String, String> entry : aliases.entrySet()) {
-            if (keyword == null) {
-                console.result(entry.getKey() + ": " + entry.getValue().substring(1));
-            } else {
-                if (keyword.equals(entry.getValue())) {
-                    console.result(entry.getKey());
-                }
-            }
-        }
-
-        return CallResult.SUCCESS;
-    }
 }

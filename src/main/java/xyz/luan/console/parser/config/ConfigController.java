@@ -14,14 +14,14 @@ public class ConfigController extends Controller<Context> {
 
     @Action("add")
     public CallResult add(@Arg("alias2") String alias, @Arg("keyword") String keyword) {
-        boolean success = context.getParser().addAlias(alias, keyword);
+        boolean success = context.getParser().getAliases().add(alias, keyword);
         console.result(success ? "Alias added successfully." : "Alias already set to something else.");
         return CallResult.SUCCESS;
     }
 
     @Action("list")
     public CallResult list(@Arg(value = "keyword", required = false) String keyword) {
-        return context.getParser().listAliasesFor(console, keyword == null ? null : ':' + keyword);
+        return context.getParser().getAliases().listFor(console, keyword == null ? null : ':' + keyword);
     }
 
     public static void defaultActions(String name, List<Callable> callables) {

@@ -3,6 +3,7 @@ package xyz.luan.console.parser.callable;
 import java.util.HashMap;
 import java.util.Map;
 
+import xyz.luan.console.parser.Aliases;
 import xyz.luan.console.parser.actions.ActionRef;
 import xyz.luan.console.parser.call.Call;
 import xyz.luan.console.parser.call.SingleCall;
@@ -56,7 +57,7 @@ public class ActionCall implements Callable {
     }
 
     @Override
-    public Call parse(String[] args, Map<String, String> aliases) {
+    public Call parse(String[] args, Aliases aliases) {
         return parseAction(args, pattern.parse(args, aliases));
     }
 
