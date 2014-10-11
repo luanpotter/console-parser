@@ -1,5 +1,6 @@
 package xyz.luan.console.parser;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import xyz.luan.console.parser.call.CallResult;
@@ -8,6 +9,14 @@ public class Aliases {
     private Map<String, String> aliases;
     private boolean enableDefaultAliases;
 
+    public static Aliases createAliasesWithDefaults() {
+        return new Aliases(new HashMap<>(), true);
+    }
+
+    public static Aliases createAliasesWithoutDefaults(Map<String, String> map) {
+        return new Aliases(map, false);
+    }
+    
     public Aliases(Map<String, String> aliases, boolean enableDefaultAliases) {
         this.aliases = aliases;
         this.enableDefaultAliases = enableDefaultAliases;
