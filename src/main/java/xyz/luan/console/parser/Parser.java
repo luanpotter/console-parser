@@ -24,9 +24,13 @@ public class Parser implements Serializable {
     public Parser(Map<String, String> aliases, List<Callable> callables) {
         this(false, aliases, callables);
     }
-    
+
     public Parser(boolean enableDefaultAliases, Map<String, String> aliases, List<Callable> callables) {
-        this.aliases = new Aliases(aliases, enableDefaultAliases);
+        this(new Aliases(aliases, enableDefaultAliases), callables);
+    }
+
+    public Parser(Aliases aliases, List<Callable> callables) {
+        this.aliases = aliases;
         this.callables = callables;
     }
 
