@@ -16,12 +16,12 @@ public class Aliases {
     public static Aliases createAliasesWithoutDefaults(Map<String, String> map) {
         return new Aliases(map, false);
     }
-    
+
     public Aliases(Map<String, String> aliases, boolean enableDefaultAliases) {
         this.aliases = aliases;
         this.enableDefaultAliases = enableDefaultAliases;
     }
-    
+
     public boolean add(String alias, String keyword) {
         if (this.aliases.get(alias) != null) {
             return false;
@@ -30,7 +30,7 @@ public class Aliases {
         return true;
     }
 
-    public boolean delete(String alias) {
+    public boolean remove(String alias) {
         if (this.aliases.get(alias) == null) {
             return false;
         }
@@ -41,26 +41,45 @@ public class Aliases {
     public String get(String alias) {
         String res = this.aliases.get(alias);
         if (this.enableDefaultAliases && res == null) {
-            return ':' + alias; 
+            return ':' + alias;
         }
         return res;
     }
-    
+
     public CallResult list(Console console) {
         return listFor(console, null);
     }
 
     public CallResult listFor(Console console, String keyword) {
+        boolean printed = false;
         for (Map.Entry<String, String> entry : aliases.entrySet()) {
             if (keyword == null) {
                 console.result(entry.getKey() + ": " + entry.getValue().substring(1));
+                printed = true;
             } else {
                 if (keyword.equals(entry.getValue())) {
                     console.result(entry.getKey());
+                    printed = true;
                 }
             }
         }
 
+        if (!printed) {
+            console.result("No aliases found.");
+        }
+
         return CallResult.SUCCESS;
+    }
+
+    public void setDefaultAliases(boolean enableDefaultAliases) {
+        this.enableDefaultAliases = enableDefaultAliases;
+    }
+
+    public boolean isDefaultAliasesEnabled() {
+        return enableDefaultAliases;
+    }
+
+    public void removeAll() {
+        this.aliases.clear();
     }
 }

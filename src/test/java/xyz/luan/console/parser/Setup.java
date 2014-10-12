@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import xyz.luan.console.parser.actions.ArgumentParser;
-import xyz.luan.console.parser.actions.ArgumentParser.CustomParser;
 import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidHandler;
 import xyz.luan.console.parser.actions.InvalidParameter;
+import xyz.luan.console.parser.actions.parser.ArgumentParser;
+import xyz.luan.console.parser.actions.parser.CustomParser;
 import xyz.luan.console.parser.call.Caller;
 import xyz.luan.console.parser.callable.Callable;
 import xyz.luan.console.parser.controller.SimpleController;

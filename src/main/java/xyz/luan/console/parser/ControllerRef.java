@@ -6,15 +6,16 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import xyz.luan.console.parser.actions.Action;
 import xyz.luan.console.parser.actions.Arg;
-import xyz.luan.console.parser.actions.ArgumentParser;
 import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidCall;
 import xyz.luan.console.parser.actions.InvalidHandler;
 import xyz.luan.console.parser.actions.InvalidParameter;
 import xyz.luan.console.parser.actions.Optional;
+import xyz.luan.console.parser.actions.parser.ArgumentParser;
 import xyz.luan.console.parser.call.CallResult;
 import xyz.luan.console.parser.util.ClassMap;
 
@@ -33,6 +34,12 @@ public class ControllerRef<T extends Controller<?>> {
         for (Method method : controller.getClass().getMethods()) {
             parseAction(method);
             parseHandler(method);
+        }
+    }
+
+    public void forEachAction(Consumer<Method> consumer) {
+        for (Map.Entry<String, Method> entry : actions.entrySet()) {
+            consumer.accept(entry.getValue());
         }
     }
 
@@ -151,9 +158,13 @@ public class ControllerRef<T extends Controller<?>> {
                 throw new InvalidAction(method, message);
             }
         }
-        
+
         if (!method.getReturnType().equals(CallResult.class)) {
             throw new InvalidAction(method, "must always return Output object");
         }
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

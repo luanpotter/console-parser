@@ -3,7 +3,7 @@ package xyz.luan.console.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestConsole implements Console {
+public class TestConsole extends TabbedConsole {
 
 	private List<String> messages = new ArrayList<>();
 	private List<String> readList = new ArrayList<>();

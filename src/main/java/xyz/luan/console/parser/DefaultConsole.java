@@ -4,27 +4,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class DefaultConsole implements Console {
+public class DefaultConsole extends TabbedConsole {
 
     private BufferedReader reader;
 
     public DefaultConsole() {
         reader = new BufferedReader(new InputStreamReader(System.in));
+        tabLevel = 0;
     }
 
     @Override
     public void message(Object m) {
-        System.out.println(m);
+        System.out.println(defaultTabs() + m);
     }
 
     @Override
     public void result(Object m) {
-        System.out.println(m);
+        System.out.println(defaultTabs() + m);
     }
 
     @Override
     public void error(Object m) {
-        System.err.println(m);
+        System.err.println(defaultTabs() + m);
     }
 
     @Override
@@ -53,5 +54,4 @@ public class DefaultConsole implements Console {
             throw new RuntimeException(e);
         }
     }
-
 }
