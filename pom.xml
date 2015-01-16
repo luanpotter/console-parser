@@ -1,41 +1,59 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>xyz.luan.console.parser</groupId>
-  <artifactId>console-parser</artifactId>
-  <version>0.1</version>
-  <packaging>jar</packaging>
+        <parent>
+                <groupId>xyz.luan</groupId>
+                <artifactId>parent-pom</artifactId>
+                <version>1.0.0</version>
+        </parent>
 
-  <name>Console Parser</name>
-  <url>github.com/luanpotter/console-parser</url>
+	<groupId>xyz.luan.console</groupId>
+	<artifactId>console-parser</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
+	<name>Console Parser</name>
+	<url>github.com/luanpotter/console-parser</url>
+        <description>Java library to easily parse console input directly into controller classes with elegance.</description>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+        <scm>
+                <url>https://github.com/luanpotter/console-parser</url>
+                <connection>scm:git:git://github.com/luanpotter/console-parser.git</connection>
+                <developerConnection>scm:git:git@github.com:luanpotter/console-parser.git</developerConnection>
+        </scm>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-	<version>3.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+        <build>
+                <plugins>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-compiler-plugin</artifactId>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-source-plugin</artifactId>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-javadoc-plugin</artifactId>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-gpg-plugin</artifactId>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-release-plugin</artifactId>
+                        </plugin>
+                </plugins>
+        </build>
 
 </project>
