@@ -15,6 +15,7 @@ public class ArgumentParser {
         parsers.put(String.class, new StringParser());
         parsers.put(Integer.class, new IntegerParser());
         parsers.put(Boolean.class, new BooleanParser());
+	parsers.put(Double.class, new DoubleParser());
     }
 
     public static boolean hasParser(Class<?> c) {
