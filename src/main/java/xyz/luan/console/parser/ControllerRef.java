@@ -70,7 +70,7 @@ public class ControllerRef<T extends Controller<?>> {
 			}	
 		}
         if (!method.getReturnType().equals(CallResult.class)) {
-            throw new InvalidHandler(method, "must always return Output object");
+            throw new InvalidHandler(method, "must always return CallResult object");
         }
 	}
 
@@ -160,7 +160,7 @@ public class ControllerRef<T extends Controller<?>> {
         }
 
         if (!method.getReturnType().equals(CallResult.class)) {
-            throw new InvalidAction(method, "must always return Output object");
+            throw new InvalidAction(method, "must always return CallResult object");
         }
     }
 
