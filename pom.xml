@@ -9,7 +9,7 @@
 
 	<groupId>xyz.luan.console</groupId>
 	<artifactId>console-parser</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>Console Parser</name>
