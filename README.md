@@ -1,3 +1,4 @@
 # console-parser
-[![Build Status](https://travis-ci.org/luanpotter/console-parser.svg?branch=master)](https://travis-ci.org/luanpotter/console-parser)  
-Java library to easily parse console input directly into controller classes with elegance.  
+[![Build Status](https://github.com/luanpotter/console-parser/workflows/Test/badge.svg?branch=master&event=push)](https://github.com/luanpotter/console-parser/workflows/Test)
+
+Java library to easily parse console input directly into controller classes with elegance.
